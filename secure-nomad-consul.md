@@ -221,6 +221,65 @@ consul {
 sudo systemctl restart nomad
 ```
 
+### Add "Read-Mode" for Consul's Anonymous Token
+To avoid some troubles when you deploy service to Consul, let's add read-mode for Consul's Anonymous Token
+
+1. Create anonymous policy with read permission
+
+```shell
+cd ~ && \
+echo "
+agent_prefix \"\" {
+  policy = \"read\"
+}
+node_prefix \"\" {
+  policy = \"read\"
+}
+service_prefix \"\" {
+  policy = \"read\"
+}
+" | sudo tee  anonymous-read.hcl
+```
+
+2. Apply/Deploy policy
+
+```shell
+consul acl policy create -name "allowed-anonymous-agent-read" -description "Allowed anonymous to read agent " -rules @anonymous-read.hcl
+
+##### OUTPUT #####
+ID:           e3614a54-e9e0-8c0a-ea0f-152ce0e7bfc8 <======= This ID will be used for next command
+Name:         allowed-anonymous-agent-read
+Description:  Allowed anonymous to read agent 
+Datacenters:  
+Rules:
+
+agent_prefix "" {
+  policy = "read"
+}
+node_prefix "" {
+  policy = "read"
+}
+service_prefix "" {
+  policy = "read"
+}
+
+```
+
+3. Update token policy
+
+```shell
+consul acl token update -id anonymous -policy-id e3614a54-e9e0-8c0a-ea0f-152ce0e7bfc8
+
+##### OUTPUT #####
+AccessorID:       00000000-0000-0000-0000-000000000002
+SecretID:         anonymous
+Description:      Anonymous Token
+Local:            false
+Create Time:      2022-12-01 11:51:42.262501908 +0700 +07
+Policies:
+   e3614a54-e9e0-8c0a-ea0f-152ce0e7bfc8 - allowed-anonymous-agent-read
+```
+
 ### NEXT, TRY TO SET UP SOME AGENT/CLIENT
 
 [Setup Client](./nomad-consul-client.md)

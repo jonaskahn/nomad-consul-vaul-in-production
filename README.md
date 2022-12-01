@@ -25,6 +25,7 @@ sh create-vm.sh
 ```
 
 #### Server Information
+> IP Servers may be different
 
 ![server-info](./img/server-info.png)
 
@@ -43,6 +44,14 @@ This structure required at least 4 servers including:
 
 ### Setup Nomad - Consul
 
+**Ref**
+- [Consul's Deployment Guide](https://developer.hashicorp.com/consul/tutorials/production-deploy/deployment-guide)
+- [Installing Nomad for Production](https://developer.hashicorp.com/nomad/docs/install/production)
+
+**Detail**
+
 1. [Setup cluster Node](./nomad-consul-cluster.md)
 2. [Secure cluster Node (Basic)](./secure-nomad-consul.md)
 3. [Setup client/agent Node](./nomad-consul-client.md)
+
+### Setup Job with auto scaler
