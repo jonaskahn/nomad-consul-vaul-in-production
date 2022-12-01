@@ -54,4 +54,11 @@ This structure required at least 4 servers including:
 2. [Secure cluster Node (Basic)](./secure-nomad-consul.md)
 3. [Setup client/agent Node](./nomad-consul-client.md)
 
+** Result **
+
+![result-1](./img/final-result-1.png)
+![result-2](./img/final-result-2.png)
+![result-3](./img/final-result-3.png)
+![result-4](./img/final-result-4.png)
+
 ### Setup Job with auto scaler
