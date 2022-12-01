@@ -16,10 +16,10 @@ Policies:
    00000000-0000-0000-0000-000000000001 - global-management
 ```
 
-> Take note for SecretID, we will use that key for later steps
+> Take note of SecretID, we will use that key for later steps
 
 2. Export SecretID key to bash env (run on all cluster nodes)
-> You actually don't need to run the script below on all cluster node, but to make administration easier, I recommend do it on all cluster nodes
+> You actually don't need to run the script below on all cluster nodes, but to make administration easier, I recommend doing it on all cluster nodes
 
 ```shell
 echo 'export CONSUL_HTTP_TOKEN="0915a8fc-293e-e6cc-4e38-5dcd41f98bc1"  
@@ -27,7 +27,7 @@ export CONSUL_MGMT_TOKEN="0915a8fc-293e-e6cc-4e38-5dcd41f98bc1"' | tee -a ~/.bas
 source ~/.bashrc
 ```
 
-3. Create default policy for node
+3. Create a default policy for node
 
 ```shell
 cd ~ && \
@@ -182,7 +182,7 @@ service_prefix \"\" {
 consul acl policy create -name "nomad-client" -description "Nomad Client Policy" -rules @nomad-client-policy.hcl
 ```
 
-5. Create token for nomad mode (server-client) 
+5. Create a token for nomad mode (server-client) 
 
 ```shell
 consul acl token create -description "Nomad Agent Token" -policy-name "nomad-server" -policy-name "nomad-client" | tee nomad-agent.token
@@ -198,7 +198,7 @@ Policies:
    9cc90b5e-1e79-60cf-0d03-b8213a227d01 - nomad-client
 ```
 
-6. Add token for Nomad when connect to Consul (run on all cluster nodes)
+6. Add the token for Nomad when connect to Consul (run on all cluster nodes)
 
 ```shell
 sudo nano /etc/nomad.d/consul.hcl
@@ -221,3 +221,6 @@ consul {
 sudo systemctl restart nomad
 ```
 
+### NEXT, TRY TO SET UP SOME AGENT/CLIENT
+
+[Setup Client](./nomad-consul-client.md)

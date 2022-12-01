@@ -1,5 +1,3 @@
-
-
 # Practice and Learn - How to use Nomad, Consul, and Vault in production for the beginner
 
 > I'm a backend developer (Java/Go/Php/Python), so I don't have much experience with DevOps except using Jenkins and Docker/Docker Compose. My company is a small startup company, we don't have a DevOps team responsible for CI/CD in production. I've just learned about Hashicorp for two weeks til I decided to write this tutorial but I'll try to complete the things. If I missed anything your contributions are welcome.

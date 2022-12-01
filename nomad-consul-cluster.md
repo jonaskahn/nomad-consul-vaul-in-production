@@ -3,7 +3,7 @@
 ## Setup [Name: node-cluster-1 <-> IP: 10.238.22.45]
 ### Setup Consul 
 
-1. Generate a secrect key
+1. Generate a secret key
 
 ```shell
 consul keygen
@@ -24,7 +24,7 @@ mkdir ~/certs
 ```
 ```shell
 cd ~/certs && consul tls ca create -domain bssd.vn
-	
+  
 ##### OUTPUT #####
 ==> Saved bssd.vn-agent-ca.pem
 ==> Saved bssd.vn-agent-ca-key.pem

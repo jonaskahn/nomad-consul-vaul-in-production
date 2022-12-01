@@ -2,7 +2,7 @@
 
 ## Importance note
 
-Be aware that **a nomad client need to connect only consul client**. If you connect 2 nomad client to same consul client. This still seem run well util you deploy a service from Nomad, very unstable by my experience
+Be aware that **a nomad client needs to connect only consul client**. If you connect 2 nomad clients to the same consul client. This still seems run well until you deploy a service from Nomad, very unstable in my experience
 
 ## Setup [Name: node-client-1 <-> IP: 10.238.22.209]
 
@@ -23,7 +23,7 @@ Policies:
 ```
  
 > ONLY DO STEP 1,2 IF YOU INSTALL ON PHYSICAL MACHINES
-1. Copy backup `~/certs` from node-cluster-1` to `node-client-1`
+1. Copy backup **~/certs** from `node-cluster-1` to `node-client-1`
 
 2. Run command 
 
