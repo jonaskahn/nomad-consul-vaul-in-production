@@ -1,6 +1,7 @@
+# Setup Nomad & Consul Server
 
-### Setup [Name: node-cluster-1 <-> IP: 10.238.22.45]
-#### Setup Consul 
+## Setup [Name: node-cluster-1 <-> IP: 10.238.22.45]
+### Setup Consul 
 
 1. Generate a secrect key
 
@@ -118,7 +119,7 @@ sudo systemctl restart consul
 sudo systemctl status consul
 ```
 
-#### Setup nomad
+### Setup nomad
 
 1. Configuration
 
@@ -219,11 +220,11 @@ consul {
 2. Start service
 
 ```bash
-sudo systemctl start nomad && sudo systemctl status nomad
+sudo systemctl restart nomad && sudo systemctl status nomad
 ```
 
-### Setup [Name: node-cluster-2 <-> IP: 10.238.22.50]
-#### Setup Consul 
+## Setup [Name: node-cluster-2 <-> IP: 10.238.22.50]
+### Setup Consul 
 
 > ONLY DO STEP 1,2 IF YOU INSTALL ON PHYSICAL MACHINES
 1. Copy backup `~/certs` from node-cluster-1` to `node-cluster-2`
@@ -304,7 +305,7 @@ sudo systemctl restart consul
 sudo systemctl status consul
 ```
 
-#### Setup nomad
+### Setup nomad
 
 1. Configuration
 
@@ -405,11 +406,11 @@ consul {
 2. Start service
 
 ```bash
-sudo systemctl start nomad && sudo systemctl status nomad
+sudo systemctl restart nomad && sudo systemctl status nomad
 ```
 
-### Setup [Name: node-cluster-3 <-> IP: 10.238.22.48]
-#### Setup Consul 
+## Setup [Name: node-cluster-3 <-> IP: 10.238.22.48]
+### Setup Consul 
 
 > ONLY DO STEP 1,2 IF YOU INSTALL ON PHYSICAL MACHINES
 1. Copy backup `~/certs` from node-cluster-1` to `node-cluster-2`
@@ -490,7 +491,7 @@ sudo systemctl restart consul
 sudo systemctl status consul
 ```
 
-#### Setup nomad
+### Setup nomad
 
 1. Configuration
 
@@ -591,7 +592,7 @@ consul {
 2. Start service
 
 ```bash
-sudo systemctl start nomad && sudo systemctl status nomad
+sudo systemctl restart nomad && sudo systemctl status nomad
 ```
 ### Result
 
@@ -602,3 +603,6 @@ sudo systemctl start nomad && sudo systemctl status nomad
 - http://10.238.22.48:8500
 
 ![consul-success](./img/consul-result-01.png)
+
+### Move to Secure Server Node 
+[Secure server node](./secure-nomad-consul.md)

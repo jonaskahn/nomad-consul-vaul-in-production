@@ -45,4 +45,6 @@ This structure required at least 4 servers including:
 
 ### Setup Nomad - Consul
 
-[Setup Nomad - Consul](./nomad-consul.md)
+1. [Setup cluster Node](./nomad-consul-cluster.md)
+2. [Secure cluster Node (Basic)](./secure-nomad-consul.md)
+3. [Setup client/agent Node](./nomad-consul-client.md)
