@@ -100,7 +100,6 @@ job "proxy" {
         args = [
           "--log.level=DEBUG",
           "--api.dashboard=true",
-          "--api.insecure=true",
           "--entrypoints.web.address=:${NOMAD_PORT_web}",
           "--entrypoints.traefik.address=:${NOMAD_PORT_admin}",
           "--entrypoints.backend.address=:${NOMAD_PORT_backend}",
