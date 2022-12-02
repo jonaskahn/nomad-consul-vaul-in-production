@@ -64,3 +64,4 @@ This structure required at least 4 servers including:
 ### Setup Job with auto scaler
 
 1. [Setup Proxy Job](./nomad-traefik-job.md)
+2. [Setup Backend Job](./nomad-backend-job.md)
