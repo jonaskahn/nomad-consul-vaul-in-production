@@ -62,3 +62,5 @@ This structure required at least 4 servers including:
 ![result-4](./img/final-result-4.png)
 
 ### Setup Job with auto scaler
+
+1. [Setup Proxy Job](./nomad-traefik-job.md)
