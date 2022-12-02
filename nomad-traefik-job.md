@@ -77,7 +77,7 @@ job "proxy" {
         timeout  = "2s"
       }
       tags = [
-            "traefik.enable=true",
+          "traefik.enable=true",
           "traefik.http.routers.dashboard.rule=(PathPrefix(`/api/`) || PathPrefix(`/dashboard/`))",
           "traefik.http.routers.dashboard.service=api@internal",
           "traefik.http.routers.dashboard.middlewares=auth",
@@ -108,7 +108,7 @@ job "proxy" {
           "--providers.consulCatalog.exposedByDefault=true",
           "--providers.consulCatalog.prefix=traefik",
           "--providers.consulcatalog.endpoint.address=10.238.22.45:8500", # Change to correct consul IP 
-          "--providers.consulcatalog.endpoint.token=c870186b-722c-5297-66bf-9eb0c191f578", # 
+          "--providers.consulcatalog.endpoint.token=c870186b-722c-5297-66bf-9eb0c191f578", # This key is taken from above
           "--providers.consulcatalog.endpoint.scheme=http"
         ]
       }
