@@ -103,3 +103,6 @@ EOH
   }
 }
 ```
+2. Result
+
+![prometheus-result](./nomad-prometheus-job.md)
