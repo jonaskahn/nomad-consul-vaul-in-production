@@ -1,4 +1,5 @@
 #! /bin/bash
+sudo rm -rf certs
 mkdir -p certs
 for i in 1 2 3
 do
