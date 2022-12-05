@@ -50,6 +50,12 @@ This structure required at least 4 servers including:
 
 **Detail**
 
+**Pre**. Install DNS Service for all nodes
+
+```shell
+bash -c "$(curl -fsSL https://gist.github.com/tuyendev/d000aa5615eea2f6072c7c45fc3e99b3/raw/15fc7e9312311ad0fc2d175d6862145ccfe9b49f/consul-dns-dnsmasq-setup.sh)"
+```
+
 1. [Setup cluster Node](./nomad-consul-cluster.md)
 2. [Secure cluster Node (Basic)](./secure-nomad-consul.md)
 3. [Setup client/agent Node](./nomad-consul-client.md)
