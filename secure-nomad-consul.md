@@ -96,6 +96,15 @@ acl {
 ```shell
 sudo systemctl restart consul
 ```
+> **You may see these errors on consul cluster node, be patient. We will solve it later**
+> - [update anonymous-token](#add-read-mode-for-consuls-anonymous-token)
+> - [create nomad-token](#make-nomad---consul-work)
+> ```shell
+> ... Request error: method=PUT url=/v1/agent/service/register from=127.0.0.1:39978 
+> error="Permission denied: token with AccessorID '00000000-0000-0000-0000-000000000002' lacks permission 'service:write' on "sg-core-nomad-server-2"
+> ... Request error: method=GET url=/v1/agent/self from=127.0.0.1:39990 
+> error="Permission denied: token with AccessorID '00000000-0000-0000-0000-000000000002' lacks permission 'agent:read' on "sg-core-consul-2""
+> ```
 
 Now, whenever you try to access consul UI, it'll require login. You can use **node-token** or **bootstrap-token** to see the difference
 
@@ -232,12 +241,12 @@ echo "
 agent_prefix \"\" {
   policy = \"read\"
 }
-node_prefix \"\" {
-  policy = \"read\"
-}
-service_prefix \"\" {
-  policy = \"read\"
-}
+//node_prefix \"\" {
+//  policy = \"read\"
+//}
+//service_prefix \"\" {
+//  policy = \"read\"
+//}
 " | sudo tee  anonymous-read.hcl
 ```
 
@@ -256,13 +265,12 @@ Rules:
 agent_prefix "" {
   policy = "read"
 }
-node_prefix "" {
-  policy = "read"
-}
-service_prefix "" {
-  policy = "read"
-}
-
+// node_prefix "" {
+//   policy = "read"
+// }
+// service_prefix "" {
+//   policy = "read"
+// }
 ```
 
 3. Update token policy
