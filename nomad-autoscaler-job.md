@@ -54,7 +54,7 @@ telemetry {
 apm "prometheus" {
   driver = "prometheus"
   config = {
-    address = "http://10.238.22.160:9090"
+    address = "http://10.238.22.193:9090"
   }
 }
 
