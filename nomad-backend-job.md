@@ -54,9 +54,12 @@ job "appservice" {
         tags = [
           "demo",
           "traefik.enable=true",
-          "traefik.http.routers.backend-route.entrypoints=backend", #route to port 8080 only 
+          "traefik.http.routers.backend-route.entrypoints=backend",
           "traefik.http.routers.backend-route.service=backend-service", 
-          "traefik.http.routers.backend-route.rule=Path(`/`)",
+          "traefik.http.routers.backend-route.rule=PathPrefix(`/`)",
+          "traefik.http.routers.backend-route.middlewares=backend-block-management",
+          "traefik.http.middlewares.backend-block-management.replacepathregex.regex=^/management(.*)",
+          "traefik.http.middlewares.backend-block-management.replacepathregex.replacement=/blocked/$1",
         ]
         check {
           type     = "http"
