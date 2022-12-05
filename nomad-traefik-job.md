@@ -99,7 +99,7 @@ job "proxy" {
         network_mode = "host"
         args = [
           "--log.level=DEBUG",
-          "--api.dashboard=true",
+          "--api",
           "--entrypoints.web.address=:${NOMAD_PORT_web}",
           "--entrypoints.traefik.address=:${NOMAD_PORT_admin}",
           "--entrypoints.backend.address=:${NOMAD_PORT_backend}",
@@ -107,7 +107,7 @@ job "proxy" {
           "--entrypoints.websecure.http.tls=true",
           "--providers.consulCatalog.exposedByDefault=true",
           "--providers.consulCatalog.prefix=traefik",
-          "--providers.consulcatalog.endpoint.address=10.238.22.45:8500", # Change to correct consul IP 
+          "--providers.consulcatalog.endpoint.address=127.0.0.18500",
           "--providers.consulcatalog.endpoint.token=c870186b-722c-5297-66bf-9eb0c191f578", # This key is taken from above
           "--providers.consulcatalog.endpoint.scheme=http"
         ]
@@ -125,8 +125,8 @@ job "proxy" {
 5. Access via links:
 - **Username/Password: test/test**
 
-- http://10.238.22.45:9999/dashboard
-- http://10.238.22.50:9999/dashboard
-- http://10.238.22.48:9999/dashboard
+- http://10.238.22.45:9999/dashboard/
+- http://10.238.22.50:9999/dashboard/
+- http://10.238.22.48:9999/dashboard/
 
 ![proxy-result](./img/proxy-setup.png)
