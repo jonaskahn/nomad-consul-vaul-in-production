@@ -18,7 +18,7 @@ I'm using VMs ([multipass](https://multipass.run/)) on Ubuntu 22.04 for this tut
 > ```
 > - Consul & Nomad
 > ```shell
-> bash -c "$(curl -fsSL https://gist.github.com/tuyendev/63a0a75c1abd354199fd12ef04bacafe/raw/71c7f72cc21943fd8679ad148c4494a55f627dc9/consul-nomad-install.sh)"
+> bash -c "$(curl -fsSL https://gist.github.com/tuyendev/63a0a75c1abd354199fd12ef04bacafe/raw/9ebe1bbfec65bddbc1edf286bcd03e9836039d2b/consul-nomad-install.sh)"
 > ```
 >
 >- Install DNS Service
