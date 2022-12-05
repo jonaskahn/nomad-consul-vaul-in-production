@@ -105,4 +105,4 @@ EOH
 ```
 2. Result
 
-![prometheus-result](./nomad-prometheus-job.md)
+![prometheus-result](./img/prometheus-result.png)
