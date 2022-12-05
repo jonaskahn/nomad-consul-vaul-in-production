@@ -46,7 +46,7 @@ This structure required at least 4 servers including:
 - Docker    : **Latest Version**
 - Consul    : **1.13.x**
 - Nomad     : **1.4.x**
-- Vault     : **v1.12.x**
+- Vault     : **1.12.x**
 - Domain    : **bssd.vn** ( used for configuration and dns service )
 ### Setup Nomad - Consul
 
