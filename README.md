@@ -44,9 +44,9 @@ This structure required at least 4 servers including:
 **Node environment**
 - OS        : **Ubuntu 20.04**
 - Docker    : **Latest Version**
-- Consul    : **13.3**
-- Nomad     : **1.4.2**
-- Vault     : **Latest Version**
+- Consul    : **1.13.x**
+- Nomad     : **1.4.x**
+- Vault     : **v1.12.x**
 - Domain    : **bssd.vn** ( used for configuration and dns service )
 ### Setup Nomad - Consul
 
