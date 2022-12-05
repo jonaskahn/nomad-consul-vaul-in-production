@@ -265,12 +265,13 @@ Rules:
 agent_prefix "" {
   policy = "read"
 }
-// node_prefix "" {
-//   policy = "read"
-// }
-// service_prefix "" {
-//   policy = "read"
-// }
+# Config below allow DNS can solved Consul Service later
+node_prefix "" {
+  policy = "read"
+}
+service_prefix "" {
+  policy = "read"
+}
 ```
 
 3. Update token policy
