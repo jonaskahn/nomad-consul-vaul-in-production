@@ -41,7 +41,7 @@ This structure required at least 4 servers including:
 - Consul: 13.3
 - Nomad: 1.4.2
 - Vault: Latest Version
-
+- Domain: bssd.vn ( used for configuration and dns service )
 ### Setup Nomad - Consul
 
 **Ref**
