@@ -10,7 +10,7 @@
 
 ###  Requisition
 I'm using VMs ([multipass](https://multipass.run/)) on Ubuntu 22.04 for this tutorial. Ensure that you install Multipass on your machine before you go
-> If you do set up on physical machines, run 2 scripts below to install, and set up docker, nomad, and consul on each machine.
+> If you do set up on physical machines, run these scripts below to install, and set up docker, nomad, and consul on each machine.
 >
 > - Docker Package and Software 
 > ```shell
