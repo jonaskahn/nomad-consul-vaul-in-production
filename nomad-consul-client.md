@@ -2,7 +2,7 @@
 
 ## Importance note
 
-Be aware that **a nomad client needs to connect only consul client**. If you connect 2 nomad clients to the same consul client. This still seems run well until you deploy a service from Nomad, very unstable in my experience
+Be aware that **a nomad client need to connect only consul client**. If you connect 2 nomad clients to the same consul client. This still seems run well until you deploy a service from Nomad, very unstable in my experience
 
 ## Setup [Name: node-client-1 <-> IP: 10.238.22.209]
 
