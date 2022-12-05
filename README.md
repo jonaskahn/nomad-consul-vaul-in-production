@@ -12,13 +12,19 @@
 I'm using VMs ([multipass](https://multipass.run/)) on Ubuntu 22.04 for this tutorial. Ensure that you install Multipass on your machine before you go
 > If you do set up on physical machines, run 2 scripts below to install, and set up docker, nomad, and consul on each machine.
 >
+> - Docker Package and Software 
 > ```shell
-> bash -c "$(curl -fsSL https://gist.github.com/tuyendev/3a3bca421b6689f73c670257090b5d34/raw/> c31f3de439c5ac86c4e4c7b50bf95a26988b0bd5/nomad-consul-prerequisite.sh)"
+> bash -c "$(curl -fsSL https://gist.github.com/tuyendev/3a3bca421b6689f73c670257090b5d34/raw/c31f3de439c5ac86c4e4c7b50bf95a26988b0bd5/nomad-consul-prerequisite.sh)"
 > ```
+> - Consul & Nomad
 > ```shell
-> bash -c "$(curl -fsSL https://gist.github.com/tuyendev/63a0a75c1abd354199fd12ef04bacafe/raw/> 71c7f72cc21943fd8679ad148c4494a55f627dc9/consul-nomad-install.sh)"
+> bash -c "$(curl -fsSL https://gist.github.com/tuyendev/63a0a75c1abd354199fd12ef04bacafe/raw/71c7f72cc21943fd8679ad148c4494a55f627dc9/consul-nomad-install.sh)"
 > ```
-
+>
+>- Install DNS Service
+>```shell
+> bash -c "$(curl -fsSL https://gist.github.com/tuyendev/d000aa5615eea2f6072c7c45fc3e99b3/raw/15fc7e9312311ad0fc2d175d6862145ccfe9b49f/consul-dns-dnsmasq-setup.sh)"
+>```
 ##### Create VMs command
 ```shell
 sh create-vm.sh
@@ -49,12 +55,6 @@ This structure required at least 4 servers including:
 - [Installing Nomad for Production](https://developer.hashicorp.com/nomad/docs/install/production)
 
 **Detail**
-
-**Pre**. Install DNS Service for all nodes
-
-```shell
-bash -c "$(curl -fsSL https://gist.github.com/tuyendev/d000aa5615eea2f6072c7c45fc3e99b3/raw/15fc7e9312311ad0fc2d175d6862145ccfe9b49f/consul-dns-dnsmasq-setup.sh)"
-```
 
 1. [Setup cluster Node](./nomad-consul-cluster.md)
 2. [Secure cluster Node (Basic)](./secure-nomad-consul.md)
