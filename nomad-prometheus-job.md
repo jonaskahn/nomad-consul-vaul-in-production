@@ -60,7 +60,7 @@ scrape_configs:
     params:
       format: ['prometheus']
     static_configs:
-    - targets: ['sg-core-nomad-client-1.service.saigon.bssd.vn:4646', 'sg-core-nomad-client-2.service.bssd.vn:4646', 'sg-core-nomad-client-3.service.bssd.vn:4646', 'sg-monitor.service.saigon.consul:4646']
+    - targets: ['sg-core-nomad-client-1.service.saigon.bssd.vn:4646', 'sg-core-nomad-client-2.service.bssd.vn:4646', 'sg-core-nomad-client-3.service.bssd.vn:4646', 'sg-monitor.service.saigon.bssd.vn:4646']
   - job_name: backend-service-monitor
     scrape_interval: 5s
     metrics_path: /management/prometheus
