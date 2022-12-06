@@ -127,10 +127,9 @@ job "proxy" {
 ```
 
 5. Access via links:
-- **Username/Password: test/test**
-
-- http://10.238.22.45:9999/dashboard/
-- http://10.238.22.50:9999/dashboard/
-- http://10.238.22.48:9999/dashboard/
+> **Username/Password: test/test**
+ - http://10.238.22.45:9999/dashboard/
+ - http://10.238.22.50:9999/dashboard/
+ - http://10.238.22.48:9999/dashboard/
 
 ![proxy-result](./img/proxy-setup.png)
