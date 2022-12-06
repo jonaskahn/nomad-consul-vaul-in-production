@@ -62,10 +62,8 @@ This structure required at least 4 servers including:
 
 **Result**
 
-![result-1](./img/final-result-1.png)
-![result-2](./img/final-result-2.png)
-![result-3](./img/final-result-3.png)
-![result-4](./img/final-result-4.png)
+<img src="./img/final-result-1.png" width="400" height="250"><img src="./img/final-result-2.png" width="400" height="250">
+<img src="./img/final-result-3.png" width="400" height="250"><img src="./img/final-result-4.png" width="400" height="250">
 
 ### Setup Job with auto scaler
 
