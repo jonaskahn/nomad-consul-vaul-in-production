@@ -43,13 +43,13 @@ job "prometheus" {
 
       template {
         change_mode = "noop"
-        destination = "local/config/webserver_alert.yml"
+        destination = "local/config/alert.yml"
         data = <<EOH
 ---
 groups:
 - name: prometheus_alerts
   rules:
-  - alert: Backend Service Alert
+  - alert: Backend down
     expr: absent(up{job="backend-service-monitor"})
     for: 10s
     labels:
@@ -65,6 +65,15 @@ EOH
 global:
   scrape_interval:     1s
   evaluation_interval: 1s
+
+alerting:
+  alertmanagers:
+  - consul_sd_configs:
+    - server: 'sg-core-consul-1.node.saigon.bssd.vn:8500'
+      services: ['alertmanager']
+
+rule_files:
+  - "alert.yml"
 
 scrape_configs:
   - job_name: consul-monitor
