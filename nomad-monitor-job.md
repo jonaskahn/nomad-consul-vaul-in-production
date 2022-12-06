@@ -340,8 +340,6 @@ EOH
 - Prometheus: http://10.238.22.193:9000/graph
 - Alert manager: http://10.238.22.193:9000/alertmanager/
 
-![](./img/prometheus-result.png  | width=100)
-![](./img/rs-prometheus.png  | width=100)
-![](./img/rs-prometheus-al.png  | width=100)
-![](./img/rs-alert.png  | width=100)
-![](./img/rs-granfana.png  | width=100)
+<img src="./img/prometheus-result.png" width="300" height="200"><img src="./img/rs-prometheus.png" width="300" height="200">
+<img src="./img/rs-prometheus-al.png" width="300" height="200"><img src="./img/rs-alert.png" width="300" height="200">
+<img src="./img/rs-granfana.png" width="300" height="200">
