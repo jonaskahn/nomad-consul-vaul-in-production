@@ -1,6 +1,6 @@
-# Deploy Prometheus job
+# Deploy Monitoring job
 
-1. Job detail
+## Deploy Prometheus
 
 ```hcl
 job "prometheus" {
@@ -46,6 +46,7 @@ job "prometheus" {
         destination = "local/config/alert.yml"
         data = <<EOH
 ---
+# Prefer sample rules: https://awesome-prometheus-alerts.grep.to/rules.html
 groups:
 - name: prometheus_alerts
   rules:
@@ -150,7 +151,7 @@ EOH
 }
 ```
 
-2. Deploy alert job
+## Deploy Alert-manager job
 
 ```hcl
 job "alertmanager" {
@@ -208,6 +209,139 @@ job "alertmanager" {
   }
 }
 ```
-3. Result
 
-![prometheus-result](./img/prometheus-result.png)
+## Granfana
+
+### Update Nomad-Monitor Node config
+
+1. Run command below to create folder
+
+```shell
+sudo mkdir -p /nomad/volumes/granfana-data
+sudo chown -R 472:472 /nomad/volumes/granfana-data
+```
+
+2. Update `client.hcl` config
+
+```hcl
+
+client {
+  enabled    = true
+  node_class = "monitor"
+  server_join {
+    #NOMAD SERVER LIST
+    retry_join = ["10.238.22.129:4647", "10.238.22.225:4647", "10.238.22.130:4647"]
+  }
+  # Add new block below
+  host_volume "granfana-data" {
+    path      = "/nomad/volumes/granfana-data/"
+    read_only = false
+  }
+}
+```
+
+3. Restart nomad
+
+```shell
+sudo systemctl restart nomad
+```
+
+4. Deploy job
+
+```hcl
+job "grafana" {
+  datacenters = ["saigon"]
+  type = "service"
+
+  group "grafana" {
+    count = 1
+
+    network {
+      port "grafana_ui" {}
+    }
+
+    volume "grafana" {
+      type   = "host"
+      source = "granfana-data"
+      read_only = false
+    }
+
+    task "grafana" {
+      driver = "docker"
+      constraint {
+        attribute = "${node.class}"
+        operator  = "="
+        value     = "monitor"
+      }
+      config {
+        image = "grafana/grafana:7.5.17"
+        ports = ["grafana_ui"]
+
+        volumes = [
+          "local/datasources:/etc/grafana/provisioning/datasources",
+        ]
+      }
+
+      env {
+        GF_AUTH_ANONYMOUS_ENABLED  = "true"
+        GF_AUTH_ANONYMOUS_ORG_ROLE = "Editor"
+        GF_SERVER_HTTP_PORT        = "${NOMAD_PORT_grafana_ui}"
+      }
+
+      template {
+        data = <<EOH
+apiVersion: 1
+datasources:
+- name: Prometheus
+  type: prometheus
+  access: proxy
+  url: http://{{ range $i, $s := service "prometheus" }}{{ if eq $i 0 }}{{.Address}}:{{.Port}}{{end}}{{end}}
+  isDefault: true
+  version: 1
+  editable: false
+EOH
+
+        destination = "local/datasources/prometheus.yaml"
+      }
+      
+      volume_mount {
+        volume      = "grafana"
+        destination = "/var/lib/grafana"
+      }
+
+      resources {
+        cpu    = 100
+        memory = 64
+      }
+
+      service {
+        name = "grafana"
+        port = "grafana_ui"
+        tags = [
+          "traefik.enable=true",
+          "traefik.http.routers.grafana-route.entrypoints=monitor",
+          "traefik.http.routers.grafana-route.service=grafana",
+          "traefik.http.routers.grafana-route.rule=PathPrefix(`/`)",
+        ]
+        check {
+          type     = "http"
+          path     = "/api/health"
+          interval = "10s"
+          timeout  = "2s"
+        }
+      }
+    }
+  }
+}
+```
+
+## Result
+- Granfana: http://10.238.22.193:9000/
+- Prometheus: http://10.238.22.193:9000/graph
+- Alert manager: http://10.238.22.193:9000/alertmanager/
+
+![](./img/prometheus-result.png  | width=100)
+![](./img/rs-prometheus.png  | width=100)
+![](./img/rs-prometheus-al.png  | width=100)
+![](./img/rs-alert.png  | width=100)
+![](./img/rs-granfana.png  | width=100)
