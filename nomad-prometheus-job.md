@@ -5,7 +5,7 @@
 ```hcl
 job "prometheus" {
   datacenters = ["saigon"]
-  type        = "system"
+  type        = "service"
 
   group "monitoring" {
     count = 1
@@ -24,7 +24,7 @@ job "prometheus" {
         value     = "monitor"
       }
       config {
-        image        = "prom/prometheus:latest"
+        image        = "prom/prometheus:v2.40.5"
         ports        = ["prometheus_ui"]
         network_mode = "host"
 
@@ -39,6 +39,24 @@ job "prometheus" {
         volumes = [
           "local/config:/etc/prometheus/config",
         ]
+      }
+
+      template {
+        change_mode = "noop"
+        destination = "local/config/webserver_alert.yml"
+        data = <<EOH
+---
+groups:
+- name: prometheus_alerts
+  rules:
+  - alert: Backend Service Alert
+    expr: absent(up{job="backend-service-monitor"})
+    for: 10s
+    labels:
+      severity: critical
+    annotations:
+      description: "Our backend is down."
+EOH
       }
 
       template {
@@ -76,6 +94,20 @@ scrape_configs:
     - server: 'sg-core-consul-2.node.saigon.bssd.vn:8500'
       services:
         - 'backend-service'
+  - job_name: alert-server-monitor
+    scrape_interval: 5s
+    params:
+      format: ['prometheus']
+    consul_sd_configs:
+    - server: 'sg-core-consul-1.node.saigon.bssd.vn:8500'
+      services:
+        - 'alertmanager'
+    - server: 'sg-core-consul-2.node.saigon.bssd.vn:8500'
+      services:
+        - 'alertmanager'
+    - server: 'sg-core-consul-2.node.saigon.bssd.vn:8500'
+      services:
+        - 'alertmanager'
 EOH
 
         change_mode   = "signal"
@@ -91,7 +123,12 @@ EOH
       service {
         name = "prometheus"
         port = "prometheus_ui"
-
+        tags = [
+          "traefik.enable=true",
+          "traefik.http.routers.prometheus-route.entrypoints=monitor",
+          "traefik.http.routers.prometheus-route.service=prometheus",
+          "traefik.http.routers.prometheus-route.rule=PathPrefix(`/`)",
+        ]
         check {
           type     = "http"
           path     = "/-/healthy"
@@ -103,6 +140,65 @@ EOH
   }
 }
 ```
-2. Result
+
+2. Deploy alert job
+
+```hcl
+job "alertmanager" {
+  datacenters = ["saigon"]
+  type        = "service"
+
+  group "alerting" {
+    count = 1
+    restart {
+      attempts = 2
+      interval = "30m"
+      delay    = "15s"
+      mode     = "fail"
+    }
+    ephemeral_disk {
+      size = 300
+    }
+    network {
+      port "alertmanager_ui" {
+        static = 9093
+      }
+    }
+    task "alertmanager" {
+      driver = "docker"
+      constraint {
+        attribute = "${node.class}"
+        operator  = "="
+        value     = "monitor"
+      }
+      config {
+        image        = "prom/alertmanager:latest"
+        network_mode = "host"
+        ports        = ["alertmanager_ui"]
+      }
+
+      service {
+        name = "alertmanager"
+        port = "alertmanager_ui"
+        tags = [
+          "traefik.enable=true",
+          "traefik.http.routers.alert-route.entrypoints=monitor",
+          "traefik.http.routers.alert-route.service=alertmanager",
+          "traefik.http.routers.alert-route.rule=PathPrefix(`/alertmanager`)",
+          "traefik.http.routers.alert-route.middlewares=alert-stripprefix",
+          "traefik.http.middlewares.alert-stripprefix.stripprefix.prefixes=/alertmanager",
+        ]
+        check {
+          type     = "http"
+          path     = "/-/healthy"
+          interval = "10s"
+          timeout  = "2s"
+        }
+      }
+    }
+  }
+}
+```
+3. Result
 
 ![prometheus-result](./img/prometheus-result.png)

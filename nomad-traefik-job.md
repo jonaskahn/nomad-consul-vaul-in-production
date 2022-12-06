@@ -57,6 +57,9 @@ job "proxy" {
       port "admin" {
         static = 9999
       }
+      port "monitor" {
+        static = 9000
+      }
       port "backend" {
         static = 8080
       }
@@ -95,19 +98,20 @@ job "proxy" {
       }
       config {
         image        = "traefik:2.9.5"
-        ports        = ["admin", "web", "backend", "frontend"]
+        ports        = ["admin", "web", "monitor", "backend", "frontend"]
         network_mode = "host"
         args = [
           "--log.level=DEBUG",
           "--api",
           "--entrypoints.web.address=:${NOMAD_PORT_web}",
           "--entrypoints.traefik.address=:${NOMAD_PORT_admin}",
+          "--entrypoints.monitor.address=:${NOMAD_PORT_monitor}",
           "--entrypoints.backend.address=:${NOMAD_PORT_backend}",
           "--entrypoints.frontend.address=:${NOMAD_PORT_frontend}",
           "--entrypoints.websecure.http.tls=true",
           "--providers.consulCatalog.exposedByDefault=true",
           "--providers.consulCatalog.prefix=traefik",
-          "--providers.consulcatalog.endpoint.address=127.0.0.18500",
+          "--providers.consulcatalog.endpoint.address=127.0.0.1:8500",
           "--providers.consulcatalog.endpoint.token=c870186b-722c-5297-66bf-9eb0c191f578", # This key is taken from above
           "--providers.consulcatalog.endpoint.scheme=http"
         ]
