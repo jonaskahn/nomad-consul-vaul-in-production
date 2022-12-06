@@ -39,6 +39,13 @@ job "appservice" {
         port_map {
           http = 8080
         }
+        logging {
+          type = "fluentd"
+          config {
+            fluentd-address = "${attr.unique.network.ip-address}:24224"
+            tag = "backend-${NOMAD_ALLOC_NAME}"
+          }
+        }
       }
       resources {
         memory = 1024
