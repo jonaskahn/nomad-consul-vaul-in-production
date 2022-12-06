@@ -70,3 +70,4 @@ This structure required at least 4 servers including:
 1. [Setup Proxy Job](./nomad-traefik-job.md)
 2. [Setup Backend Job](./nomad-backend-job.md)
 3. [Setup Monitoring (Prometheus,Alert,Granfana) Job](./nomad-monitor-job.md)
+4. [Setup Log](./nomad-log-job.md)

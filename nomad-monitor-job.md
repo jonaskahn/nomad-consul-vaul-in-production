@@ -5,7 +5,7 @@
 ```hcl
 job "prometheus" {
   datacenters = ["saigon"]
-  type        = "service"
+  type        = "system"
 
   group "monitoring" {
     count = 1
@@ -46,7 +46,6 @@ job "prometheus" {
         destination = "local/config/alert.yml"
         data = <<EOH
 ---
-# Prefer sample rules: https://awesome-prometheus-alerts.grep.to/rules.html
 groups:
 - name: prometheus_alerts
   rules:
@@ -83,12 +82,23 @@ scrape_configs:
       format: ['prometheus']
     static_configs:
     - targets: ['sg-core-consul-1.node.saigon.bssd.vn:8500', 'sg-core-consul-2.node.saigon.bssd.vn:8500', 'sg-core-consul-3.node.saigon.bssd.vn:8500']
+
   - job_name: nomad-monitor
     metrics_path: /v1/metrics
     params:
       format: ['prometheus']
-    static_configs:
-    - targets: ['sg-core-nomad-client-1.service.saigon.bssd.vn:4646', 'sg-core-nomad-client-2.service.bssd.vn:4646', 'sg-core-nomad-client-3.service.bssd.vn:4646', 'sg-agent-monitor.service.saigon.bssd.vn:4646']
+    scrape_interval: 5s
+    consul_sd_configs:
+    - server: 'sg-core-consul-1.node.saigon.bssd.vn:8500'
+      tags: 
+        - 'nomad-service'
+    relabel_configs:
+    - source_labels: ['__meta_consul_tags']
+      regex: '(.*)http(.*)'
+      action: keep
+    - source_labels: [__meta_consul_node]
+      target_label: instance
+
   - job_name: backend-service-monitor
     scrape_interval: 5s
     metrics_path: /management/prometheus
@@ -98,12 +108,7 @@ scrape_configs:
     - server: 'sg-core-consul-1.node.saigon.bssd.vn:8500'
       services:
         - 'backend-service'
-    - server: 'sg-core-consul-2.node.saigon.bssd.vn:8500'
-      services:
-        - 'backend-service'
-    - server: 'sg-core-consul-2.node.saigon.bssd.vn:8500'
-      services:
-        - 'backend-service'
+  
   - job_name: alert-server-monitor
     scrape_interval: 5s
     params:
