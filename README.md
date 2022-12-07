@@ -71,3 +71,6 @@ This structure required at least 4 servers including:
 2. [Setup Backend Job](./nomad-backend-job.md)
 3. [Setup Monitoring (Prometheus,Alert,Granfana) Job](./nomad-monitor-job.md)
 4. [Setup Log](./nomad-log-job.md)
+
+### Working with Vault
+- Pending section 
