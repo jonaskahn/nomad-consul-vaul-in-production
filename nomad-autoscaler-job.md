@@ -13,7 +13,6 @@ job "autoscaler" {
 
     network {
       port "http" {}
-      port "promtail" {}
     }
 
     task "autoscaler" {
@@ -42,8 +41,8 @@ job "autoscaler" {
       template {
         data = <<EOF
 nomad {
-  address = "http://10.238.22.45:4646"
-  token = "845e4d5b-611e-66ca-30c6-f5e27a7fa092" ###<= change no nomad token 
+  address = "http://{{ range $i, $s := service "nomad" }}{{ if eq $i 0 }}{{.Address}}{{end}}{{end}}:4646"
+  token = "845e4d5b-611e-66ca-30c6-f5e27a7fa092"
 }
 
 telemetry {
@@ -54,14 +53,14 @@ telemetry {
 apm "prometheus" {
   driver = "prometheus"
   config = {
-    address = "http://10.238.22.193:9090"
+    address = "http://{{ range $i, $s := service "prometheus" }}{{ if eq $i 0 }}{{.Address}}:{{.Port}}{{end}}{{end}}"
   }
 }
 
 strategy "target-value" {
   driver = "target-value"
 }
-          EOF
+EOF
 
         destination = "${NOMAD_TASK_DIR}/config.hcl"
       }

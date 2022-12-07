@@ -193,7 +193,6 @@ sudo nano /etc/nomad.d/consul.hcl
 ##### content #####
 consul {
   address = "127.0.0.1:8500"
-  # server_service_name = "sg-agent-nomad-server-1"
   client_service_name = "sg-agent-nomad-client-1"
   auto_advertise = true
   # server_auto_join = true
