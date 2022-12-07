@@ -85,8 +85,9 @@ job "proxy" {
           "traefik.http.routers.dashboard.service=api@internal",
           "traefik.http.routers.dashboard.middlewares=auth",
           "traefik.http.routers.dashboard.entrypoints=traefik",
-          "traefik.http.middlewares.auth.basicauth.users=test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/",
+          "traefik.http.middlewares.auth.basicauth.users=demo:$apr1$cznldywe$ZmKZw8RpO6sZc5GqUN0xp/",
       ]
+      
     }
 
     task "traefik" {
@@ -127,7 +128,7 @@ job "proxy" {
 ```
 
 5. Access via links:
-> **Username/Password: test/test**
+> **Username/Password: demo/demo**
  - http://10.238.22.45:9999/dashboard/
  - http://10.238.22.50:9999/dashboard/
  - http://10.238.22.48:9999/dashboard/

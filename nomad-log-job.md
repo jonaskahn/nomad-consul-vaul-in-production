@@ -69,7 +69,7 @@ client {
 ### Deploy Elastic - Kibana
 
 ```hcl
-job "log-monitor" {
+job "logging-monitor" {
   datacenters = ["saigon"]
   type        = "service"
 
@@ -123,7 +123,7 @@ job "log-monitor" {
         "bootstrap.memory_lock"="true"
         "ELASTIC_PASSWORD"="elastic"
         "xpack.security.enabled"="true"
-        "KIBANA_SYSTEM_PASSWORD"="kibana"
+        "xpack.security.audit.enabled"="true"
       }
 
       service {
@@ -131,6 +131,10 @@ job "log-monitor" {
         port = "http"
         check {
           type     = "http"
+          header {
+            # user:pass = elastic:elastic #
+            Authorization = ["Basic ZWxhc3RpYzplbGFzdGlj"]
+          }
           path     = "/"
           interval = "10s"
           timeout  = "2s"
@@ -165,12 +169,29 @@ job "log-monitor" {
         port_map = {
           kibanahttp = 5601
         }
+        volumes = [
+          "local/kibana.yml:/usr/share/kibana/config/kibana.yml",
+        ]
+      }
+      template {
+        data = <<EOH
+
+server.name: kibana
+server.host: 0.0.0.0
+
+monitoring.ui.container.elasticsearch.enabled: true
+monitoring.ui.container.logstash.enabled: true
+
+elasticsearch.username: elastic
+elasticsearch.password: elastic
+xpack.security.encryptionKey: 8ch0nEksFk85sPtE90PQNlTQDOs24Ddc
+xpack.encryptedSavedObjects.encryptionKey: 70GKO9UcDWFOUp3OPfN8BqF1TskRtL9q
+xpack.reporting.encryptionKey: 5FwcLVm69D4OxVW8pN0aQAJAtjg8qqi6
+EOH
+        destination = "local/kibana.yml"
       }
       env = {
         "ELASTICSEARCH_HOSTS" = "http://${NOMAD_IP_kibanahttp}:9200"
-        "ELASTICSEARCH_USERNAME"="elastic"
-        "ELASTIC_PASSWORD"="elastic"
-        "KIBANA_SYSTEM_PASSWORD"="kibana"
       }
       service {
         name = "${TASKGROUP}-kibana"
