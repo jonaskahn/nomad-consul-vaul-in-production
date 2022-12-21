@@ -62,8 +62,7 @@ This structure required at least 4 servers including:
 
 **Result**
 
-> Note: After finish setting up, you'll not able to see the result like the images below cause I remove the service name for Nomad server node in (/etc/nomad.d/consul). It's a bit different instead of "sg-core-nomad-server-1", "sg-core-nomad-server-2", "sg-core-nomad-server-3", now they all named as "Nomad" in Consul for easier querying
-
+> Note: After finish setting up, you'll not able to see the result like the images below cause I remove the service name for Nomad server node in (/etc/nomad.d/consul), it's a bit different. Instead of seeing "sg-core-nomad-server-1", "sg-core-nomad-server-2", "sg-core-nomad-server-3" in Consul, now they all named as "Nomad" for easier querying.
 
 <img src="./img/final-result-1.png" width="400" height="250"><img src="./img/final-result-2.png" width="400" height="250">
 <img src="./img/final-result-3.png" width="400" height="250"><img src="./img/final-result-4.png" width="400" height="250">
