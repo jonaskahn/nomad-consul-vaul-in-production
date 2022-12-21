@@ -61,7 +61,7 @@ This structure required at least 4 servers including:
 3. [Setup client/agent Node](./nomad-consul-client.md)
 
 **Result**
-
+> Note: After finish setting up, you'll not able to see the result like the images below cause I remove the service name for Nomad server node in (/etc/nomad.d/consul)
 <img src="./img/final-result-1.png" width="400" height="250"><img src="./img/final-result-2.png" width="400" height="250">
 <img src="./img/final-result-3.png" width="400" height="250"><img src="./img/final-result-4.png" width="400" height="250">
 
