@@ -210,6 +210,7 @@ sudo nano /etc/nomad.d/consul.hcl
 ##### content #####
 consul {
   address = "127.0.0.1:8500"
+#  server_service_name = "sg-core-nomad-server-1" <= Remove for easier querying in consul
   client_service_name = "sg-core-nomad-client-1"
   auto_advertise = true
   server_auto_join = true
@@ -395,6 +396,7 @@ sudo nano /etc/nomad.d/consul.hcl
 ##### content #####
 consul {
   address = "127.0.0.1:8500"
+#  server_service_name = "sg-core-nomad-server-2" <= Remove for easier querying in consul
   client_service_name = "sg-core-nomad-client-2"
   auto_advertise = true
   server_auto_join = true
@@ -580,6 +582,7 @@ sudo nano /etc/nomad.d/consul.hcl
 ##### content #####
 consul {
   address = "127.0.0.1:8500"
+#  server_service_name = "sg-core-nomad-server-3" <= Remove for easier querying in consul
   client_service_name = "sg-core-nomad-client-3"
   auto_advertise = true
   server_auto_join = true
